@@ -1,52 +1,69 @@
-import {
+/*import {
   graphql,
   GraphQLSchema,
   GraphQLObjectType,
-  GraphQLString
+  GraphQLString,
+  GraphQLInt,
+  GraphQLBoolean,
+  GraphQLList
 } from 'graphql';
+
 
 describe('Run', () => {
   let Person = new GraphQLObjectType({
     name: 'Person',
     description: 'A person',
-    fields: {
+    fields: () => ({
       name: {
         type: GraphQLString,
-        collect: logCollect("Child", { returnResult: "Test" })
+        collect: RegisterField()
+      },
+      age: {
+        type: GraphQLInt,
+        collect: RegisterField()
+      },
+      friends: {
+        type: new GraphQLList(Person),
+        collect: RegisterRelation('(n)-[:IS_FRIENDS-WITH]-(friends:Person)')
+      },
+      isOlderThan: {
+        type: GraphQLBoolean,
+        args: {
+          age: {
+            type: GraphQLInt
+          }
+        },
+        collect: RegisterField('n.age > { age }')
       }
-    }
+    })
   });
 
   var schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: 'RootQueryType',
-      fields: {
-        hello: {
+      fields: () => ({
+        findPerson: {
           type: Person,
-          collect: logCollect("Parent"),
-          resolve: (parent) => {
-            return { name: "Test", age: 25 };
+          collect: RegisterNode(),
+          resolve: () => {
+            return {
+              name: 'Bob',
+              age: 28,
+              friends: [
+                { name: 'Steve', age: 40 },
+                { name: 'Earl', age: 22 },
+                { name: 'Derrick', age: 58 },
+                { name: 'David', age: 19 }
+              ]
+            };
           }
         }
-      }
+      })
     })
   });
 
-  var query = '{ hello { name } }';
+  var query = '{ bob: findPerson { name age friends { name }} }';
 
   graphql(schema, query).then(result => {
-    console.log(result);
   });
-
-  function logCollect(name, ret) {
-    return (children, args, root, field, type) => {
-      console.log(`${name} collect:`);
-      console.log(`  children: %j`, children);
-      console.log(`  args: %j`, args);
-      console.log(`  root: ${root}`);
-      console.log(`  field: %j`, field.name.value);
-      console.log(`  type: %j`, type);
-      return ret;
-    };
-  }
-});
+});*/
